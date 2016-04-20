@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>scroll interval</title>
+	<style type="text/css">
+	*{
+    	padding: 0;
+    	margin:0;
+    }
+    body{
+    	text-align: center;
+    	font-family: "微软雅黑";
+    	font-size:12px;
+    }
+    #scrollBox{
+    	box-shadow: 5px 5px 5px #B9B9B9; 
+		font-size: 12px;
+		text-align: left;
+		text-indent: 10px;
+		margin:50px auto;
+		width:250px;
+		height: 24px;
+        overflow: hidden;/*隐藏下面的滚动区域*/
+	}
+	#scrollBox ul li{
+		height: 24px;
+		line-height: 24px;
+		list-style: none;
+	}
+	.navBar{
+		box-shadow: -2px -2px 2px #EFEFEF,2px 5px 5px #B9B9B9; 
+		margin:50px auto;
+		margin-bottom: -50px;
+		text-align: center;
+		height: 50px;
+		width:250px;
+		line-height: 50px;
+		background-color: #B9B9B9;
+		color:#fff;
+	}
+	</style>
+</head>
+<body>
+<marquee direction="right" scrolldelay="500">我向右滚动</marquee>
+<div class="navBar">js realize scroll</div>
+<div id="scrollBox">
+	<ul>
+		<li>1 good good study！</li>
+		<li>2 day day up！</li>
+		<li>3 好好学习天天向上!</li>
+		<li>4 good good study!day day up!</li>
+	</ul>
+</div>
+<script type="text/javascript">
+	var area=document.getElementById("scrollBox");
+	area.innerHTML+=area.innerHTML;//clone one area
+	area.scrollTop=0;
+	var iLiHeight=24;//循环的高度---两行文字
+	var loop;//循环滚动
+	var speed=50;//循环滚动的速度
+	var delay=2000;
+	setTimeout(startMove,delay);
+	function startMove(){
+		area.scrollTop++;
+		loop=setInterval(scrollUp,speed);
+	}
+	function scrollUp(){
+		if(area.scrollTop%iLiHeight===0){
+			clearInterval(loop);
+			setTimeout(startMove,delay);
+		}else{
+			area.scrollTop++;
+			/*
+			滚动的高度达到循环区域高度的一半时
+			 */
+			if(area.scrollTop>area.scrollHeight/2){
+				area.scrollTop=0;//回到初始才能继续循环滚动
+			}
+		}
+	}
+</script>	
+</body>
+</html>

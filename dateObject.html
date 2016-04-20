@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>Date&clock</title>
+	<style type="text/css">
+	*{
+		text-align: center;
+		font-family: "微软雅黑";
+		font-size: 12px;
+		padding: 0;
+		margin: 0;
+	}
+	div{
+		box-shadow: -2px -2px 2px #EFEFEF,5px 5px 5px #B9B9B9;
+		width:300px;
+		height:100px;
+		margin:50px auto;
+		line-height: 50px;
+		background-color: #B9B9B9;
+		color:#fff;
+	}
+	</style>
+</head>
+<body>
+	<div>
+		<p id="nowTime">今天:</p>
+        <p id="leftTime">距离结束还有：</p>
+	</div>
+    <script type="text/javascript">
+	    window.onload=function(){
+	            getNow1();
+	            leftTime();
+         };
+/*
+当前时间
+ */
+        function getNow(){
+               var myDate=new Date();
+               var year=myDate.getFullYear();
+               var month=myDate.getMonth()+1;
+               var date=myDate.getDate();
+               var day=myDate.getDay();
+               var hours=myDate.getHours();
+               var minutes=myDate.getMinutes();
+               var seconds=myDate.getSeconds();
+
+               var week=[];
+               week[0]="星期天";
+               week[1]="星期一";
+               week[2]="星期二";
+               week[3]="星期三";
+               week[4]="星期四";
+               week[5]="星期五";
+               week[6]="星期六";
+
+                if(hours<10){
+                    hours="0"+hours;
+                }
+                if(minutes<10){
+                    minutes="0"+minutes;
+                }
+                if(seconds<10){
+                    seconds="0"+seconds;
+                }
+
+                document.getElementById("nowTime").innerHTML=year+"年"+month+"月"+date+"日"+week[day]+hours+":"+minutes+":"+seconds;
+                setTimeout("getNow()",1000);
+        }
+        function getNow1(){
+                setTimeout("getNow()",1000);
+        }
+/*
+倒计时
+ */
+        function leftTime(){
+                var nowTime=new Date();
+                var endTime=new Date(2017/1/1,0);
+                var leftTime=(endTime.getTime()-nowTime.getTime())/1000;//秒
+    
+                var day=parseInt(leftTime/60/60/24);
+                var hour=parseInt((leftTime/60/60)%24);
+                var minute=parseInt(leftTime/60%60);
+                var second=parseInt(leftTime%60);
+
+                if(hour<10){
+                                hour="0"+hour;
+                }
+                if(minute<10){
+                                minute="0"+minute;
+                }
+                if(second<10){
+                                second="0"+second;
+                }
+
+                document.getElementById("leftTime").innerHTML="距离新的一年还有："+day+"天"+hour+"小时"+minute+"分钟"+second+"秒";
+                setTimeout("leftTime()",1000);
+        }
+        function leftTime1(){
+                setTimeout("leftTime()",1000);
+        }
+    </script>
+</body>
+</html>
