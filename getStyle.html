@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getStyle</title>
+	<style type="text/css">
+	  #middle{
+	  	font-size:12px;
+	  	width:500px;
+	  	height:500px;
+	  	background-color:pink;
+	  	border:10px solid #DBDBDB;
+	  	position: absolute;
+	  	top:50%;
+	  	left:50%;
+	  	transform: translatex(-50%) translateY(-50%);
+	  }
+	</style>
+</head>
+<body>
+	<div id="middle">
+	    currentStyle[attr]
+	    getComputedStyle(element,":afer").attr
+	    getComputedStyle(element,":afer")[attr]
+	</div>
+	<script type="text/javascript">
+	    var oMiddle=document.getElementById("middle");
+	    var timer=null;
+		window.onload=function(){
+			oMiddle.onmouseover=function(){
+				startChange(-5,0);
+			};
+			oMiddle.onmouseout=function(){
+				startChange(5,500);
+			};
+		};
+		var startChange=function(speed,target){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(parseInt(getStyle(oMiddle,"width"))===target){
+				    clearInterval(timer);
+			    }else{
+			        oMiddle.style.width=parseInt(getStyle(oMiddle,"width"))+speed+"px";
+			        oMiddle.style.fontSize=parseInt(getStyle(oMiddle,"font-size"))-speed+"px";
+			    }
+			},30);
+		};
+		/*
+		封装了获取样式的函数(element,"attribute")
+		 */
+		var getStyle=function(obj,attr){
+			if(obj.currentStyle){
+				//如果是IE浏览器
+				return currentStyle[attr];//取出属性attr的值12px,"hi"
+			}else{
+				//火狐浏览器
+				return getComputedStyle(obj,null)[attr];
+			}
+		};
+	</script>
+</body>
+</html>
