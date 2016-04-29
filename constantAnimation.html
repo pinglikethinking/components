@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>left</title>
+	<style type="text/css">
+	    *{
+	    	padding:0;
+	    	margin:0;
+	    }
+	    #slide{
+	    	float: left;
+	    	position:relative;
+	    	width:500px;
+	    	height:100px;
+	    	left:-400px;
+	    	background-color: red;
+	    	overflow: hidden;
+	    }
+	    .right{
+	    	width:100px;
+	    	height: 100px;
+	    	background-color: #DBDBDB;
+	    	float: right;
+	    }
+	    #opachan{
+	    	position:absolute;
+	    	bottom:0;
+	    	width:300px;
+	    	height:100px;
+	    	background-color:#D50BF1;
+	    	filter:alpha(opacity:30);/*ie浏览器下的透明度*/
+	    	opacity:0.3;/*chrome firefox浏览器下的透明度*/
+	    }
+	</style>
+</head>
+<body>
+<div id="slide">
+	<div class="right"></div>
+</div>
+<div id="opachan"></div>	
+<script type="text/javascript">
+    var oslide=document.getElementById("slide");
+    var opachan=document.getElementById("opachan");
+    var timer=null;
+    var opatimer=null;
+    var alpha=30;
+	window.onload=function(){
+		oslide.onmouseover=function(){
+			startMove(10,0);
+		};
+		oslide.onmouseout=function(){
+			startMove(-10,-400);
+		};
+		opachan.onmouseover=function(){
+			startChange(1,100);
+		};
+		opachan.onmouseout=function(){
+			startChange(-1,30);
+		};
+	};
+	var startMove=function(speed,target){
+		clearInterval(timer);
+		timer=setInterval(function(){
+			if(oslide.offsetLeft===target){
+		        clearInterval(timer);
+		    }else{
+			    oslide.style.left=oslide.offsetLeft+speed+'px';
+			}
+		},30);	
+	};
+	var startChange=function(speed,target){
+		clearInterval(opatimer);
+		opatimer=setInterval(function(){
+			if(alpha===target){
+				clearInterval(opatimer);
+			}else{
+				alpha+=speed;
+				opachan.style.filter='alpha(opacity:'+alpha+')';
+				opachan.style.opacity=alpha/100;
+			}
+		},30);
+	};
+</script>
+</body>
+</html>
