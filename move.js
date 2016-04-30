@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function getStyle(obj,attr){
 	if(obj.currentStyle){
 		return obj.currentStyle[attr];//IE
@@ -104,5 +103,4 @@ function startChange(obj,json,fn){
 			}
 		}
 	},20);
->>>>>>> 051f7cfd7a04a4067f9f129913bc23f628dd66fa
 }
