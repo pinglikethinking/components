@@ -28,13 +28,13 @@
 	    var timer=null;
 		window.onload=function(){
 			oMiddle.onmouseover=function(){
-				startChange(-5,0);
+				animate(-5,0);
 			};
 			oMiddle.onmouseout=function(){
-				startChange(5,500);
+				animate(5,500);
 			};
 		};
-		var startChange=function(speed,target){
+		var animate=function(speed,target){
 			clearInterval(timer);
 			timer=setInterval(function(){
 				if(parseInt(getStyle(oMiddle,"width"))===target){
