@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,4 +95,102 @@
 		};
 	</script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>bufferAnimation</title>
+	<style type="text/css">
+	   *{
+	   	padding: 0;
+	   	margin:0;
+	   }
+	   #slide{
+	   	position: relative;
+	   	left:-800px;
+	   	width:1000px;
+	   	height:300px;
+	   	overflow:hidden;
+	   	background-color: pink;
+	   	margin-bottom: 20px;
+	   }
+	   .right{
+	   	width:200px;
+	   	height: 300px;
+	   	float:right;
+	   	background-color: #969696;
+	   }
+	   ul,li{
+	   	list-style: none;
+	   }
+	   ul li{
+	   	width:200px;
+	   	height: 50px;
+	   	background-color: pink;
+	   	margin-bottom: 20px;
+	   }
+	</style>
+</head>
+<body>
+	<div id="slide">
+		<div class="right"></div>
+	</div>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<script type="text/javascript">
+		var oslide=document.getElementById("slide");
+		var oli=document.getElementsByTagName("li");
+		var timer=null;
+		//获取到LI标签数组everyone's animation
+		for(var i=0;i<oli.length;i++){
+			oli[i].timer=null;//多物体运动，不能共享定时器以及透明度
+			oli[i].onmouseover=function(){
+				startChange(this,500);
+			};
+			oli[i].onmouseout=function(){
+				startChange(this,200);
+			};
+		}
+		window.onload=function(){
+			oslide.onmouseover=function(){
+				startMove(0);
+			};
+			oslide.onmouseout=function(){
+				startMove(-800);
+			};
+		};
+		var startMove=function(target){
+			clearInterval(timer);
+			//loop:
+			timer=setInterval(function(){
+				var speed=(target-oslide.offsetLeft)/20;
+			    speed=speed>0?Math.ceil(speed):Math.floor(speed);//一定要记得取整
+				if(oslide.offsetLeft===target){
+					clearInterval(timer);
+				}else{
+					oslide.style.left=oslide.offsetLeft+speed+"px";
+				}
+			},30);
+		};
+		//多物体运动
+		var startChange=function(obj,target){
+			clearInterval(obj.timer);
+			//loop:
+			obj.timer=setInterval(function(){
+				var speed=(target-obj.offsetWidth)/20;
+			    speed=speed>0?Math.ceil(speed):Math.floor(speed);//一定要记得取整
+				if(obj.offsetWidth===target){
+					clearInterval(obj.timer);
+				}else{
+					obj.style.width=obj.offsetWidth+speed+"px";
+				}
+			},30);
+		};
+	</script>
+</body>
+>>>>>>> 051f7cfd7a04a4067f9f129913bc23f628dd66fa
 </html>

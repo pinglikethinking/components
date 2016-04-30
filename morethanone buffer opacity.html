@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,4 +53,60 @@
 		};
 	</script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>buffer morethanone opacity</title>
+	<style type="text/css"> 
+	ul,li{
+		list-style:none;
+	}
+	ul li{
+	   	width:200px;
+	   	height: 50px;
+	   	background-color: pink;
+	   	margin-bottom: 20px;
+	   	opacity:0.3;
+	   	filter:alpha(opacity:30);
+	   }
+	</style>
+</head>
+<body>
+    <ul>
+    	<li></li>
+    	<li></li>
+        <li></li>
+    </ul>
+	<script type="text/javascript">
+	    var oli=document.getElementsByTagName("li");
+		//获取到LI标签数组everyone's animation
+		for(var i=0;i<oli.length;i++){
+			oli[i].timer=null;//多物体运动，不能共享定时器以及透明度
+			oli[i].alpha=30;
+			oli[i].onmouseover=function(){
+				opachange(this,10,100);
+			};
+			oli[i].onmouseout=function(){
+				opachange(this,-10,30);
+			};
+		}
+		//多物体透明度
+		var opachange=function(obj,speed,target){
+			clearInterval(obj.timer);
+			//loop
+			obj.timer=setInterval(function(){
+				if(obj.alpha===target){
+					clearInterval(obj.timer);
+				}else{
+					obj.alpha+=speed;
+					obj.style.opacity=obj.alpha/100;
+					obj.style.filter="alpha(opacity:"+obj.alpha+")";
+				}
+			},30);
+		};
+	</script>
+</body>
+>>>>>>> 051f7cfd7a04a4067f9f129913bc23f628dd66fa
 </html>
