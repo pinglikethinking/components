@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>回调函数</title>
+</head>
+<body>
+	回到函数
+	<script type="text/javascript">
+	window.onload=function(){
+		start(function(){
+			start();
+		});
+	};
+		function start(fn){
+			console.log("hi");
+			if(fn){
+				fn();
+			}
+		}
+	</script>
+</body>
+</html>

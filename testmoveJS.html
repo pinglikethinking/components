@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style type="text/css">
+	  #div1{
+	  	width:200px;
+	  	height: 200px;
+	  	background-color:#DBDBDB;
+	  	border:2px solid #000;
+	  	opacity:0.3;
+	  }
+	  img{
+	  	margin-top: 10px;
+	  	width:300px;
+	  	height: 300px;
+	  }
+	</style>
+</head>
+<body>
+	<div id="div1"></div>
+	<img src="browserProblem1.png">
+	<script type="text/javascript" src="move.js"></script>
+	<script type="text/javascript">
+		var oDiv=document.getElementById("div1");
+		window.onload=function(){
+			oDiv.onmouseover=function(){
+				startChange(oDiv,{"height":400,"width":400,"opacity":100},function(){
+					console.log("完成");
+				});
+			};
+			oDiv.onmouseout=function(){
+				startChange(oDiv,{"height":200,"width":200,"opacity":30},function(){
+					startChange(oDiv,{"width":500,"height":500,"opacity":80},function(){
+						console.log("complete");
+					});
+				});
+			};
+		};
+	</script>
+</body>
+</html>
