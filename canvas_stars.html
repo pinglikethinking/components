@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas stars</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.join{
+			position: absolute;
+			width: 150px;
+			height: 50px;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%);
+			background-color: purple;
+			z-index: 5;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" height="667" width="1366" style="display: block;height:100%;z-index:1;">
+	</canvas>
+	<div class="join">pinglikethinking</div>
+	<script type="text/javascript">
+		(function(){
+	/*
+	get context
+	 */
+	var canvasEL=document.getElementById("canvas"),
+		ctx=canvasEL.getContext("2d");
+	/*
+	stars edges array
+	 */
+	var nodes=[],
+		edges=[],
+		mousePos=[0,0];
+	/*
+	common variables
+	 */
+	var easingFactor=5.0,
+		bgcolor="#000",
+		nodeColor="#fff",
+		edgeColor="#fff";
+	/*
+	resize
+	 */
+	window.onresize=function(){
+		ctx.width=document.body.clientWidth;
+		ctx.height=document.body.clientHeight;
+		if(nodes.length===0){
+			constructNodes();
+		}
+		render();
+	};
+	window.onresize();
+	window.requestAnimationFrame(step);
+	/*
+	add star edge
+	 */
+	function constructNodes(){
+		var width=canvasEL.width,
+			height=canvasEL.height;
+		for(var i=0;i<100;i++){
+			var node={
+				drivenByMouse:i===0,
+				x:Math.random()*width,
+				y:Math.random()*height,
+				vx:Math.random()*1-0.5,
+				vy:Math.random()*1-0.5,
+				radius:Math.random()>0.9?3+Math.random()*3:1+Math.random()*3
+			};
+			nodes.push(node);
+		}
+		addEdges(nodes);
+	}
+	/*
+	edge is exist or not
+	 */
+	function addEdges(nodes){
+		nodes.forEach(function(e){
+			nodes.forEach(function(e2){
+				if(e===e2){
+					return;
+				}
+				var isexist=false,
+					edge={
+						from:e,
+						to:e2
+					};
+				edges.forEach(function(e){
+					if(e.from===edge.from&&e.to===edge.to){
+						isexist=true;
+					}
+					if(e.to===edge.from&&e.from===edge.to){
+						isexist=true;
+					}
+				});
+				if(!isexist){
+					edges.push(edge);
+				}
+			});
+		});
+	}
+	/*
+	render star edge
+	 */
+	function render(){
+		var width=canvasEL.width,
+			height=canvasEL.height;
+		/*background*/
+		ctx.fillStyle=bgcolor;
+		ctx.fillRect(0,0,width,height);
+		/*edge*/
+		edges.forEach(function(e){
+			var length=Math.sqrt(Math.pow((e.from.x-e.to.x),2)+Math.pow((e.from.y-e.to.y),2)),
+				tag=width/8;
+			if(length>tag){
+				return;
+			}
+			ctx.strokeStyle=edgeColor;
+			ctx.lineWidth=(1.0-length/tag)*2.5;
+			ctx.globalAlpha=1.0-length/tag;
+			ctx.beginPath();
+			ctx.moveTo(e.from.x, e.from.y);
+			ctx.lineTo(e.to.x, e.to.y);
+			ctx.stroke();
+		});
+		/*star*/
+		ctx.globalAlpha=1.0;
+		nodes.forEach(function(e){
+			if(e.drivenByMouse){
+				return;
+			}
+			ctx.fillStyle=nodeColor;
+			ctx.beginPath();
+			ctx.arc(e.x,e.y,e.radius,0,2*Math.PI);
+			ctx.closePath();
+			ctx.fill();
+		});
+	}
+	/*
+	animate star firstnode drivenBymouse
+	 */
+	function step(){
+		var width=canvasEL.clientWidth,
+			height=canvasEL.clientHeight;
+		nodes.forEach(function(e){
+			if(e.drivenBymouse){
+				return;
+			}
+			e.x+=e.vx;
+			e.y+=e.vy;
+			if(e.x<=0||e.x>=width){
+				e.vx*=-1;
+				e.x=reset(0,width,e.x);
+			}
+			if(e.y<=0||e.y>=height){
+				e.vy*=-1;
+				e.y=reset(0,height,e.y);
+			}
+		});
+		FirstnodeDrivenByMouse();
+		render();
+		window.requestAnimationFrame(step);
+	}
+	/*
+	return area
+	 */
+	function reset(min,max,value){
+		if(value<=min){
+			return min;
+		}else{
+			return max;
+		}
+	}
+	/*
+	first node driven by mouse
+	 */
+	function FirstnodeDrivenByMouse(){
+		nodes[0].x+=(mousePos[0]-nodes[0].x)/easingFactor;
+		nodes[0].y+=(mousePos[1]-nodes[0].y)/easingFactor;
+	}
+	/*
+	mouse position
+	 */
+	window.onmousemove=function(e){
+		mousePos[0]=e.clientX;
+		mousePos[1]=e.clientY;
+	};
+})();
+	</script>
+</body>
+</html>
