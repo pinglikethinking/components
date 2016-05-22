@@ -25,7 +25,7 @@ function animate(obj,json,fn){
 			}
 			//2 caculate bufferSpeed
 			var speed=(json[i]-icur)/10;//!int
-			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+			speed=speed>0?Math.floor(speed):Math.ceil(speed);
 			/*
 			**Math.ceil,floor取整，避免浏览器计算问题来的小数问题**
 			 */
