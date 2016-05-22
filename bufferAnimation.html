@@ -70,7 +70,7 @@
 			//loop:
 			timer=setInterval(function(){
 				var speed=(target-oslide.offsetLeft)/20;
-			    speed=speed>0?Math.ceil(speed):Math.floor(speed);//一定要记得取整
+			    speed=speed>0?Math.floor(speed):Math.ceil(speed);//一定要记得取整
 				if(oslide.offsetLeft===target){
 					clearInterval(timer);
 				}else{
@@ -84,7 +84,7 @@
 			//loop:
 			obj.timer=setInterval(function(){
 				var speed=(target-obj.offsetWidth)/20;
-			    speed=speed>0?Math.ceil(speed):Math.floor(speed);//一定要记得取整
+			    speed=speed>0?Math.floor(speed):Math.ceil(speed);//一定要记得取整
 				if(obj.offsetWidth===target){
 					clearInterval(obj.timer);
 				}else{
